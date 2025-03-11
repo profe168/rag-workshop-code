@@ -22,15 +22,17 @@ export const findFunctionDefinitionTool = createTool({
     });
     
     const results = await vectorStore.query({
-      indexName: "default",
+      indexName: "workshop",
       queryVector: embedding,
       topK: 3,
       filter: {
         // Only search code files
-        fileType: language ? [language] : ["ts", "js", "py", "java", "cpp", "c", "go", "rs"],
+        fileType: language
+          ? [language]
+          : ["ts", "js", "py", "java", "cpp", "c", "go", "rs"],
         // Only get chunks that contain function definitions
-        chunkType: "function_definition"
-      }
+        chunkType: "function_definition",
+      },
     });
 
     return results;

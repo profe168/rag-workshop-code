@@ -16,7 +16,6 @@
     "@mastra/core": "^0.5.0",
     "@mastra/rag": "^0.1.8",
     "@mastra/pg": "^0.2.0",
-    "@mastra/chroma": "^0.2.0",
     "ai": "latest",
     "mastra": "^0.3.0",
     "zod": "^3.24.2"

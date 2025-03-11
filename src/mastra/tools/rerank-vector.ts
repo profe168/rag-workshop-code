@@ -5,7 +5,7 @@ export const rerankVectorTool = createVectorQueryTool({
   id: "rerank-vector",
   description: "Reranks a list of results based on a query",
   vectorStoreName: "pg",
-  indexName: "default",
+  indexName: "workshop",
   model: openai.embedding("text-embedding-3-small"),
   reranker: {
     model: openai("gpt-4o"),

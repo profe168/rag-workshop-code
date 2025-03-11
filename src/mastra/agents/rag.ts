@@ -1,22 +1,22 @@
 import { Agent } from '@mastra/core/agent';
 import {
   findFunctionDefinitionTool,
-  findUsageExamplesTool,
   findRelatedDocumentationTool,
   queryVectorTool,
-  rerankVectorTool
-} from '../tools';
-import { openai } from '@ai-sdk/openai';
+  rerankVectorTool,
+  basicSearchTool,
+} from "../tools";
+import { openai } from "@ai-sdk/openai";
 
 export const ragAgent = new Agent({
-  name: 'ragAgent',
-  instructions: 'Helps explore and understand codebases using RAG',
-  model: openai('gpt-4o'),
+  name: "ragAgent",
+  instructions: "Helps explore and understand codebases using RAG",
+  model: openai("gpt-4o"),
   tools: {
+    basicSearchTool,
     findFunctionDefinitionTool,
-    findUsageExamplesTool,
     findRelatedDocumentationTool,
     queryVectorTool,
-    rerankVectorTool
-  }
+    rerankVectorTool,
+  },
 }); 

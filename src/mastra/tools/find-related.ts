@@ -22,13 +22,13 @@ export const findRelatedDocumentationTool = createTool({
     });
     
     const results = await vectorStore.query({
-      indexName: "default",
+      indexName: "workshop",
       queryVector: embedding,
       topK: 5,
       // Add metadata filter to only search documentation files
       filter: {
-        fileType: ["md", "mdx", "txt", "rst", "docs"]
-      }
+        fileType: ["md", "mdx", "txt", "rst", "docs"],
+      },
     });
     
     return results;
