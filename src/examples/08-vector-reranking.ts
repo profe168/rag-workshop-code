@@ -3,27 +3,33 @@ import { mastra } from "../mastra";
 import { openai } from "@ai-sdk/openai";
 import { rerank } from "@mastra/rag";
 
-const query = "What is the capital of France?";
-const { embedding } = await embed({
-  model: openai.embedding("text-embedding-3-small"),
-  value: query,
-});
+async function rerankingExample() {
+  const query = "How can I improve vector search results?";
 
-const pgVector = mastra.getVector("pg");
+  const { embedding } = await embed({
+    model: openai.embedding("text-embedding-3-small"),
+    value: query,
+  });
 
-const results = await pgVector.query({
-  indexName: "upsert-example",
-  queryVector: embedding,
-  topK: 10,
-  filter: {
-    source: "article1.txt",
-  },
-});
+  const pgVector = mastra.getVector("pg");
 
-console.log(results);
+  // Get initial results
+  const results = await pgVector.query({
+    indexName: "search-examples",
+    queryVector: embedding,
+    topK: 10,
+  });
 
-const rerankedResults = await rerank(results, query, openai("gpt-4o"), {
-  topK: 5,
-});
+  console.log("\nInitial Search Results:");
+  console.log(results);
 
-console.log(rerankedResults);
+  // Rerank results
+  const rerankedResults = await rerank(results, query, openai("gpt-4o"), {
+    topK: 3,
+  });
+
+  console.log("\nReranked Results:");
+  console.log(rerankedResults);
+}
+
+rerankingExample().catch(console.error);

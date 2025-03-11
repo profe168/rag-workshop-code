@@ -6,7 +6,16 @@ import { mastra } from "../mastra";
 // Example documents to insert
 const documents = [
   {
-    text: "# Introduction to Vector Databases\nVector databases are specialized databases that store and index high-dimensional vectors for similarity search.",
+    text: `# Vector Database Guide
+
+## Introduction
+Vector databases are specialized databases that store and index high-dimensional vectors for similarity search. They are essential for modern AI applications, especially in semantic search and recommendation systems.
+
+## Key Features
+- Efficient similarity search
+- Support for high-dimensional data
+- Optimized for machine learning applications
+- Scalable for large datasets`,
     metadata: {
       source: "vector-db-guide.md",
       type: "documentation",
@@ -14,11 +23,35 @@ const documents = [
     },
   },
   {
-    text: "function searchVectors(query: string) {\n  const results = await vectorStore.search(query);\n  return results;\n}",
+    text: `# Search Implementation Guide
+
+## Basic Search
+Here's how to implement a basic vector search:
+
+\`\`\`typescript
+async function searchVectors(query: string) {
+  // Convert query to embedding
+  const { embedding } = await embed(query);
+  
+  // Search the vector store
+  const results = await vectorStore.search({
+    vector: embedding,
+    topK: 5
+  });
+  
+  return results;
+}
+\`\`\`
+
+## Advanced Features
+For better results, consider:
+- Using metadata filters
+- Implementing reranking
+- Adjusting similarity thresholds`,
     metadata: {
-      source: "search.ts",
-      type: "code",
-      language: "typescript",
+      source: "search-guide.md",
+      type: "documentation",
+      section: "implementation",
     },
   },
 ];
@@ -27,17 +60,22 @@ async function upsertExampleVectors() {
   // Create MDocument instance
   const doc = new MDocument({
     docs: documents,
-    type: "text",
+    type: "markdown",
   });
 
-  // Chunk the documents appropriately
-  const chunks = await doc.chunk({
-    strategy: "recursive",
-    size: 1000,
-    overlap: 200,
+  // Chunk the documents
+  await doc.chunk({
+    strategy: "markdown",
+    headers: [
+      ["#", "Header 1"],
+      ["##", "Header 2"],
+    ],
   });
 
-  // Generate embeddings for all chunks
+  // Get chunked documents
+  const chunks = doc.getDocs();
+
+  // Generate embeddings
   const { embeddings } = await embedMany({
     model: openai.embedding("text-embedding-3-small"),
     values: chunks.map((chunk) => chunk.text),
@@ -46,9 +84,9 @@ async function upsertExampleVectors() {
   // Get PgVector instance
   const pgVector = mastra.getVector("pg");
 
-  // Upsert vectors with their metadata
+  // Upsert vectors
   await pgVector.upsert({
-    indexName: "upsert-example",
+    indexName: "search-examples",
     vectors: embeddings,
     metadata: chunks.map((chunk) => ({
       ...chunk.metadata,
@@ -56,7 +94,7 @@ async function upsertExampleVectors() {
     })),
   });
 
-  console.log(`Successfully upserted ${chunks.length} vectors`);
+  console.log(`Successfully upserted ${chunks.length} document chunks`);
 }
 
 // Run the example
