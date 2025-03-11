@@ -1,8 +1,7 @@
 import { embed } from "ai";
-import { mastra } from "../index";
+import { mastra } from "../mastra";
 import { openai } from "@ai-sdk/openai";
 import { rerank } from "@mastra/rag";
-
 
 const query = "What is the capital of France?";
 const { embedding } = await embed({
@@ -22,7 +21,6 @@ const results = await pgVector.query({
 });
 
 console.log(results);
-
 
 const rerankedResults = await rerank(results, query, openai("gpt-4o"), {
   topK: 5,

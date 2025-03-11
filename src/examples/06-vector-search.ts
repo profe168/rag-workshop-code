@@ -1,8 +1,8 @@
 import { embed } from "ai";
-import { mastra } from "../index";
+import { mastra } from "../mastra";
 import { openai } from "@ai-sdk/openai";
 
-const {embedding} = await embed({
+const { embedding } = await embed({
   model: openai.embedding("text-embedding-3-small"),
   value: "Hello, world!",
 });
