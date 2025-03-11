@@ -1,16 +1,16 @@
-import { ragAgent } from "../mastra/agents";
+import { codeAgent } from "./agent";
 
 // Example: Agent choosing findCodeTool for code-specific searches
 async function findCodeExample() {
   // Finding function definitions
-  const functionResponse = await ragAgent.generate(
+  const functionResponse = await codeAgent.generate(
     "Find all implementations of authenticate functions in our TypeScript code"
   );
 
   console.log("Function Search:", functionResponse.text);
 
   // Finding usage examples
-  const usageResponse = await ragAgent.generate(
+  const usageResponse = await codeAgent.generate(
     "Show me examples of how we use the Logger class"
   );
 
