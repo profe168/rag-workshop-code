@@ -99,7 +99,7 @@ async function upsertDocuments() {
 
   // Upsert vectors
   await pgVector.upsert({
-    indexName: "documentation",
+    indexName: "workshop",
     vectors: embeddings,
     metadata: allChunks.map((chunk) => ({
       ...chunk.metadata,

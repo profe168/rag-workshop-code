@@ -1,73 +1,93 @@
-import { ragAgent } from "../mastra/agents";
+import { queryVectorAgent } from "../mastra/agents";
 
 // Example: Agent choosing queryVectorTool for semantic searches
 async function queryVectorExample() {
-  // Example 1: Basic semantic search
-  const basicResponse = await ragAgent.generate(
-    "How do we handle input validation in our codebase?"
+  // Example 1: Semantic search for error handling
+  const errorResponse = await queryVectorAgent.generate(
+    "Find implementations in our codebase that show how we handle database errors and validation errors"
   );
 
-  console.log("Basic Vector Search:", basicResponse.text);
+  console.log("\nError Handling Search:", errorResponse.text);
 
-  // Example 2: Search with explicit filter request
-  const filteredResponse = await ragAgent.generate(
-    "Can you look for error handling patterns using a filter for TypeScript files and return the top 5 matches?"
+  // Example 2: Search with format and section filters
+  const configResponse = await queryVectorAgent.generate(
+    "Search our JSON configuration for logging settings and monitoring outputs. Only look in the configuration files."
   );
 
-  console.log("Filtered Search:", filteredResponse.text);
+  console.log("\nConfiguration Search:", configResponse.text);
 
-  // Example 3: Search with reranking request
-  const rerankedResponse = await ragAgent.generate(
-    "Can you find code similar to this error handling: try/catch around database queries?"
+  // Example 3: Search with reranking for authentication
+  const authResponse = await queryVectorAgent.generate(
+    "Find the most relevant code examples showing JWT token verification and session validation. Please rerank the results."
   );
 
-  console.log("Reranked Search:", rerankedResponse.text);
+  console.log("\nAuthentication Search:", authResponse.text);
 }
 
 queryVectorExample().catch(console.error);
 
 /* Example output showing queryVectorTool's semantic capabilities:
-Basic Vector Search: {
+Error Handling Search: {
   role: "assistant",
-  content: "I'll search for our input validation approaches",
+  content: "I'll search for our error handling implementations",
   toolCalls: [{
     tool: "queryVectorTool",
     args: { 
-      query: "input validation data sanitization",
-      topK: 5
+      query: "database error handling validation error implementation",
+      filter: {
+        format: "markdown",
+        section: "error-handling"
+      },
+      topK: 3
     },
     result: [
-      { text: "function validateUserInput(data: unknown) {...}", score: 0.89 }
+      { 
+        text: "class DatabaseError extends AppError {\n  constructor(\n    message: string,\n    public originalError: Error...",
+        score: 0.89,
+        metadata: { section: "error-handling" }
+      }
     ]
   }]
 }
 
-Filtered Search: {
+Configuration Search: {
   role: "assistant",
-  content: "I'll search TypeScript files for error handling patterns, limiting to top 5 results",
+  content: "I'll look specifically in our configuration for logging settings",
   toolCalls: [{
     tool: "queryVectorTool",
     args: { 
-      query: "error handling patterns",
-      filter: { fileType: ["ts", "tsx"] },
-      topK: 5
+      query: "logging configuration monitoring outputs",
+      filter: {
+        format: "json",
+        section: "settings"
+      },
+      topK: 2
     },
-    result: [...]
+    result: [
+      { 
+        text: "\"monitoring\": {\n  \"logging\": {\n    \"level\": \"info\",\n    \"format\": \"json\",\n    \"outputs\": [...",
+        score: 0.92
+      }
+    ]
   }]
 }
 
 Reranked Search: {
   role: "assistant",
-  content: "Let me find similar database error handling patterns",
+  content: "I'll search for authentication code and rerank the results",
   toolCalls: [{
     tool: "queryVectorTool",
     args: { 
-      query: "try catch database query error handling pattern",
+      query: "JWT token verification session validation implementation",
+      filter: { section: "authentication" },
       rerank: true,
-      topK: 10
+      topK: 5
     },
     result: [
-      { text: "try { await pool.query(...) } catch (e) {...}", score: 0.95 }
+      { 
+        text: "async verifyToken(token: string): Promise<JWTPayload> {\n  try {\n    const decoded = jwt.verify(token, this.JWT_SECRET)...",
+        score: 0.95
+      }
     ]
   }]
 }

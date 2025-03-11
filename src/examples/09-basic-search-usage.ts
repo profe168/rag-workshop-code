@@ -1,27 +1,35 @@
-import { ragAgent } from "../mastra/agents";
+import { basicAgent } from "../mastra/agents";
 
 // Example: Agent choosing basicSearchTool for simple keyword searches
 async function basicSearchExample() {
-  const response = await ragAgent.generate(
-    "What does our documentation say about authentication?"
+  // Example 1: Authentication implementation
+  const authResponse = await basicAgent.generate(
+    "How do we implement JWT authentication in our system?"
   );
+  console.log("\nJWT Authentication Search:", authResponse.text);
 
-  console.log("Basic Search:", response.text);
+  // Example 2: Error handling patterns
+  const errorResponse = await basicAgent.generate(
+    "What are our standard error handling patterns for API responses?"
+  );
+  console.log("\nError Handling Search:", errorResponse.text);
+
+  // Example 3: Configuration structure
+  const configResponse = await basicAgent.generate(
+    "What monitoring configurations are available in our system?"
+  );
+  console.log("\nConfiguration Search:", configResponse.text);
 }
 
 basicSearchExample().catch(console.error);
 
-/* Example output showing basicSearchTool is best for keyword matching:
-Basic Search: {
-  role: "assistant",
-  content: "Let me check our documentation for information about authentication",
-  toolCalls: [{
-    tool: "basicSearchTool",
-    args: { query: "authentication" },
-    result: [
-      { text: "README.md: ## Authentication\nTo authenticate with the API, you'll need...", metadata: { ... } },
-      { text: "docs/auth.md: Authentication is handled through JWT tokens...", metadata: { ... } }
-    ]
-  }]
-}
+/* Example output:
+JWT Authentication Search: Based on our documentation, JWT authentication is implemented using the 
+AuthenticationService class. It handles token generation, verification, and session validation...
+
+Error Handling Search: Our system uses a standardized error handling approach with custom error 
+classes like AppError and HttpError. All errors include a code, message, and optional details...
+
+Configuration Search: The monitoring configuration includes APM settings, logging outputs 
+(Elasticsearch and CloudWatch), metrics collection, and alert configurations for Slack and PagerDuty...
 */
