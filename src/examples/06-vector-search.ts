@@ -10,7 +10,7 @@ const { embedding } = await embed({
 const pgVector = mastra.getVector("pg");
 
 const results = await pgVector.query({
-  indexName: "workshop",
+  indexName: "upsert-example",
   queryVector: embedding,
   topK: 10,
   filter: {

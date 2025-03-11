@@ -1,11 +1,5 @@
 import { Agent } from '@mastra/core/agent';
-import {
-  findFunctionDefinitionTool,
-  findRelatedDocumentationTool,
-  queryVectorTool,
-  rerankVectorTool,
-  basicSearchTool,
-} from "../tools";
+import { findCodeTool, queryVectorTool, basicSearchTool } from "../tools";
 import { openai } from "@ai-sdk/openai";
 
 export const ragAgent = new Agent({
@@ -14,9 +8,7 @@ export const ragAgent = new Agent({
   model: openai("gpt-4o"),
   tools: {
     basicSearchTool,
-    findFunctionDefinitionTool,
-    findRelatedDocumentationTool,
+    findCodeTool,
     queryVectorTool,
-    rerankVectorTool,
   },
 }); 

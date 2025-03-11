@@ -48,7 +48,7 @@ async function upsertExampleVectors() {
 
   // Upsert vectors with their metadata
   await pgVector.upsert({
-    indexName: "workshop",
+    indexName: "upsert-example",
     vectors: embeddings,
     metadata: chunks.map((chunk) => ({
       ...chunk.metadata,
