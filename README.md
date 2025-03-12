@@ -2,6 +2,23 @@
 
 This repository contains examples demonstrating RAG (Retrieval Augmented Generation) capabilities using Mastra.
 
+## Getting Started
+
+1. **Install dependencies**:
+```bash
+pnpm i
+```
+
+2. **Set up environment variables**:
+   - Copy the example environment file to create your own:
+```bash
+cp .env.example .env
+```
+   - Open the `.env` file and add your:
+     - OpenAI API key
+     - PostgreSQL connection string
+     - Cohere API key (if using Cohere models)
+
 ## Structure
 
 ### Sample Documents (`src/documents/`)
@@ -70,23 +87,6 @@ Contains markdown documents used to test our RAG functionality:
     - Finding function definitions
     - Finding usage examples
 
-## Getting Started
-
-1. **Install dependencies**:
-```bash
-pnpm i
-```
-
-2. **Set up environment variables**:
-   - Copy the example environment file to create your own:
-```bash
-cp .env.example .env
-```
-   - Open the `.env` file and add your:
-     - OpenAI API key
-     - PostgreSQL connection string
-     - Cohere API key (if using Cohere models)
-
 ## Usage
 
 1. First, insert the sample documents:
@@ -112,6 +112,20 @@ pnpm tsx src/documents/upsert.ts
 pnpm tsx src/examples/09-basic-search-usage.ts
 pnpm tsx src/examples/10-query-vector-usage.ts
 ```
+
+4. Explore the bonus code search examples:
+
+Upsert the code documents for the bonus examples:
+```bash
+pnpm tsx src/bonus/documents/upsert.ts
+```
+
+Run the code search example:
+```bash
+pnpm tsx src/bonus/01-find-code-usage.ts
+```
+
+This demonstrates how to use RAG to search through code files, find implementations of specific methods, and locate class definitions in your codebase.
 
 ## Key Concepts
 
