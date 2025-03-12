@@ -10,18 +10,18 @@ export const findCodeTool = createTool({
     query: z
       .string()
       .describe(
-        "What to search for (e.g., 'map function', 'error handling example')"
+        "What to search for (e.g., 'authentication', 'error handling', 'logging')"
       ),
     type: z
-      .enum(["function", "example", "usage"])
+      .enum(["function", "method", "class"])
       .default("function")
-      .describe("Type of code to find"),
-    language: z
-      .enum(["typescript", "javascript", "python"])
+      .describe("Type of code to find (function, method, or class)"),
+    section: z
+      .enum(["authentication", "error-handling", "logging"])
       .optional()
-      .describe("Programming language to search in"),
+      .describe("Section of the codebase to search in"),
   }),
-  execute: async ({ context: { query, type, language }, mastra }) => {
+  execute: async ({ context: { query, type, section }, mastra }) => {
     const vectorStore = mastra?.vectors?.pg;
     if (!vectorStore) {
       throw new Error("Vector store not found");
@@ -31,30 +31,40 @@ export const findCodeTool = createTool({
     const enhancedQuery =
       type === "function"
         ? `function ${query}`
-        : type === "example"
-          ? `example of ${query}`
-          : `how to use ${query}`;
+        : type === "method"
+          ? `method ${query}`
+          : `class ${query}`;
 
     const { embedding } = await embed({
       model: openai.embedding("text-embedding-3-small"),
       value: enhancedQuery,
     });
 
+    // Build the filter
+    const filter: Record<string, any> = {
+      type: "code",
+      format: "typescript",
+    };
+
+    // Add section filter if provided
+    if (section) {
+      filter.section = section;
+    }
+
+    // Add chunk type filter based on the type of code we're looking for
+    if (type === "function") {
+      filter.chunkType = "function_definition";
+    } else if (type === "method") {
+      filter.chunkType = "method_definition";
+    } else if (type === "class") {
+      filter.chunkType = "class_definition";
+    }
+
     const results = await vectorStore.query({
-      indexName: "workshop",
+      indexName: "bonus",
       queryVector: embedding,
       topK: 5,
-      filter: {
-        // Filter by content type and language
-        fileType: language ? [language] : ["ts", "js", "py"],
-        // Different chunk types based on what we're looking for
-        chunkType:
-          type === "function"
-            ? "function_definition"
-            : type === "example"
-              ? "code_example"
-              : "code_usage",
-      },
+      filter: filter,
     });
 
     return results;

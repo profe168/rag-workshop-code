@@ -27,77 +27,17 @@ async function queryVectorExample() {
 
 queryVectorExample().catch(console.error);
 
-/* Example output showing queryVectorTool's semantic capabilities:
-Error Handling Search: {
-  role: "assistant",
-  content: "I'll search for our error handling implementations",
-  toolCalls: [{
-    tool: "queryVectorTool",
-    args: { 
-      query: "database error handling validation error implementation",
-      filter: {
-        format: "markdown",
-        section: "error-handling"
-      },
-      topK: 3
-    },
-    result: [
-      { 
-        text: "class DatabaseError extends AppError {\n  constructor(\n    message: string,\n    public originalError: Error...",
-        score: 0.89,
-        metadata: { section: "error-handling" }
-      }
-    ]
-  }]
-}
+/* Example output:
 
-Filtered Error Handling Search: {
-  role: "assistant",
-  content: "I'll search for error handling information in our application",
-  toolCalls: [{
-    tool: "queryVectorTool",
-    args: { 
-      query: "error handling implementation",
-      filter: {
-        "$and": [
-          { "section": "error-handling" },
-          { "format": "markdown" }
-        ]
-      },
-      topK: 3
-    },
-    result: [
-      { 
-        text: "class DatabaseError extends AppError {\n  constructor(\n    message: string,\n    public originalError: Error...",
-        score: 0.89,
-        metadata: {
-          source: "error-handling.md",
-          type: "documentation",
-          section: "error-handling",
-          format: "markdown"
-        }
-      }
-    ]
-  }]
-}
+Error Handling Search: I found several implementations for handling database and validation errors. 
+The DatabaseError class extends AppError and captures the original error with context. It's used 
+throughout our codebase to standardize database error handling...
 
-Reranked Search: {
-  role: "assistant",
-  content: "I'll search for authentication code and rerank the results",
-  toolCalls: [{
-    tool: "queryVectorTool",
-    args: { 
-      query: "JWT token verification session validation implementation",
-      filter: { section: "authentication" },
-      rerank: true,
-      topK: 5
-    },
-    result: [
-      { 
-        text: "async verifyToken(token: string): Promise<JWTPayload> {\n  try {\n    const decoded = jwt.verify(token, this.JWT_SECRET)...",
-        score: 0.95
-      }
-    ]
-  }]
-}
+Filtered Error Handling Search: According to our error-handling documentation, we use a centralized 
+approach with the errorHandlerMiddleware. This middleware categorizes errors by type, logs them 
+appropriately, and returns standardized error responses...
+
+Authentication Search: The JWT token verification and session validation are implemented in the 
+AuthenticationService class. The verifyToken method uses jwt.verify to decode and validate tokens, 
+while validateSession checks if the session exists and hasn't expired...
 */

@@ -4,10 +4,20 @@ import { openai } from "@ai-sdk/openai";
 import { mastra } from "../mastra";
 import fs from "fs/promises";
 import path from "path";
+import { fileURLToPath } from 'url';
+
+// Get the directory name of the current file
+// This works in both CommonJS and ES modules
+const currentFilePath = fileURLToPath(import.meta.url);
+const currentDir = path.dirname(currentFilePath);
+
+// Go up to the project root (1 level up from src/documents)
+const projectRoot = path.resolve(currentDir, '../..');
+
 
 async function upsertDocuments() {
-  // Read all documentation files
-  const docsDir = path.join(process.cwd(), "src", "documents");
+  // Use the absolute path to the documents directory
+  const docsDir = path.join(projectRoot, "src", "documents");
 
   // Process markdown documents
   const markdownDocs = [
@@ -96,6 +106,8 @@ async function upsertDocuments() {
 
   // Get PgVector instance
   const pgVector = mastra.getVector("pg");
+  // Delete existing index (if exists)
+  await pgVector.deleteIndex("workshop");
   await pgVector.createIndex({
     indexName: "workshop",
     dimension: 1536,
