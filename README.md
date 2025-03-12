@@ -23,11 +23,12 @@ cp .env.example .env
 
 ### Sample Documents (`src/documents/`)
 
-Contains markdown documents used to test our RAG functionality:
+Contains markdown and json documents used to test our RAG functionality:
 
-- `auth.ts` - Authentication guide with JWT examples
-- `error-handling.ts` - Error handling patterns and best practices
-- `logging.ts` - Logging system documentation
+- `auth.md` - Authentication guide with JWT examples
+- `error-handling.md` - Error handling patterns and best practices
+- `logging.md` - Logging system documentation
+- `application-settings.json` - Application settings configuration
 - `upsert.ts` - Script to insert documents into the vector store
 
 ### Basic Chunking Examples (`src/examples/01-04`)
@@ -36,7 +37,7 @@ Contains markdown documents used to test our RAG functionality:
    - Simple text chunking by character count
    - Shows basic overlapping chunks
 
-2. **Recursive Code Chunking** (`02-recursive-code-chunking.ts`)
+2. **Recursive Chunking** (`02-recursive-chunking.ts`)
    - Code-aware chunking that preserves function boundaries
    - Demonstrates chunking while maintaining code context
 
@@ -89,16 +90,20 @@ Contains markdown documents used to test our RAG functionality:
 
 ## Usage
 
-1. First, insert the sample documents:
-```bash
-pnpm tsx src/documents/upsert.ts
-```
-
-2. Try the chunking examples to understand different strategies:
+1. Try the chunking examples to understand different strategies:
 ```bash
 pnpm tsx src/examples/01-character-chunking.ts
-pnpm tsx src/examples/02-recursive-code-chunking.ts
-# etc...
+pnpm tsx src/examples/02-recursive-chunking.ts
+pnpm tsx src/examples/03-json-chunking.ts
+pnpm tsx src/examples/04-markdown-chunking.ts
+```
+
+2. Try the embedding and vector store operations:
+```bash
+pnpm tsx src/examples/05-embedding.ts
+pnpm tsx src/examples/06-vector-upserting.ts
+pnpm tsx src/examples/07-vector-search.ts
+pnpm tsx src/examples/08-vector-reranking.ts
 ```
 
 3. Explore the agent examples to see RAG in action:
@@ -112,20 +117,6 @@ pnpm tsx src/documents/upsert.ts
 pnpm tsx src/examples/09-basic-search-usage.ts
 pnpm tsx src/examples/10-query-vector-usage.ts
 ```
-
-4. Explore the bonus code search examples:
-
-Upsert the code documents for the bonus examples:
-```bash
-pnpm tsx src/bonus/documents/upsert.ts
-```
-
-Run the code search example:
-```bash
-pnpm tsx src/bonus/01-find-code-usage.ts
-```
-
-This demonstrates how to use RAG to search through code files, find implementations of specific methods, and locate class definitions in your codebase.
 
 ## Key Concepts
 
@@ -143,3 +134,26 @@ This demonstrates how to use RAG to search through code files, find implementati
 ### Agent Tools
 - Basic keyword search
 - Semantic search with filters
+
+## Bonus Example (`src/bonus/`)
+
+A bonus example that demonstrates how to use RAG to search through code files, find implementations of specific methods, and locate class definitions in your codebase.
+
+### Bonus Documents (`src/bonus/documents/`)
+
+Contains markdown documents used to test our RAG functionality:
+
+- `authentication-service.ts` - Authentication service implementation
+- `error-handling.ts` - Error handling patterns and best practices
+- `logger.ts` - Logging system documentation
+- `upsert.ts` - Script to insert documents into the vector store
+
+Upsert the code documents for the bonus examples:
+```bash
+pnpm tsx src/bonus/documents/upsert.ts
+```
+
+Run the code search example:
+```bash
+pnpm tsx src/bonus/01-find-code-usage.ts
+```
