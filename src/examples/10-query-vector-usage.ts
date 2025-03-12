@@ -1,7 +1,8 @@
-import { queryVectorAgent } from "../mastra/agents";
+import { mastra } from "../mastra";
 
 // Example: Agent choosing queryVectorTool for semantic searches
 async function queryVectorExample() {
+  const queryVectorAgent = mastra.getAgent("queryVectorAgent");
   // Example 1: Semantic search for error handling
   const errorResponse = await queryVectorAgent.generate(
     "Find implementations in our codebase that show how we handle database errors and validation errors"
@@ -11,14 +12,14 @@ async function queryVectorExample() {
 
   // Example 2: Search with format and section filters
   const configResponse = await queryVectorAgent.generate(
-    "Search our JSON configuration for logging settings and monitoring outputs. Only look in the configuration files."
+    "How do we handle errors in our application? Filter where section is error-handling AND format is markdown. Return the top 3 results."
   );
 
-  console.log("\nConfiguration Search:", configResponse.text);
+  console.log("\nFiltered Error Handling Search:", configResponse.text);
 
   // Example 3: Search with reranking for authentication
   const authResponse = await queryVectorAgent.generate(
-    "Find the most relevant code examples showing JWT token verification and session validation. Please rerank the results."
+    "Find the most relevant code examples showing JWT token verification and session validation."
   );
 
   console.log("\nAuthentication Search:", authResponse.text);
@@ -50,23 +51,31 @@ Error Handling Search: {
   }]
 }
 
-Configuration Search: {
+Filtered Error Handling Search: {
   role: "assistant",
-  content: "I'll look specifically in our configuration for logging settings",
+  content: "I'll search for error handling information in our application",
   toolCalls: [{
     tool: "queryVectorTool",
     args: { 
-      query: "logging configuration monitoring outputs",
+      query: "error handling implementation",
       filter: {
-        format: "json",
-        section: "settings"
+        "$and": [
+          { "section": "error-handling" },
+          { "format": "markdown" }
+        ]
       },
-      topK: 2
+      topK: 3
     },
     result: [
       { 
-        text: "\"monitoring\": {\n  \"logging\": {\n    \"level\": \"info\",\n    \"format\": \"json\",\n    \"outputs\": [...",
-        score: 0.92
+        text: "class DatabaseError extends AppError {\n  constructor(\n    message: string,\n    public originalError: Error...",
+        score: 0.89,
+        metadata: {
+          source: "error-handling.md",
+          type: "documentation",
+          section: "error-handling",
+          format: "markdown"
+        }
       }
     ]
   }]

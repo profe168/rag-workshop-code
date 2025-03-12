@@ -96,6 +96,10 @@ async function upsertDocuments() {
 
   // Get PgVector instance
   const pgVector = mastra.getVector("pg");
+  await pgVector.createIndex({
+    indexName: "workshop",
+    dimension: 1536,
+  });
 
   // Upsert vectors
   await pgVector.upsert({

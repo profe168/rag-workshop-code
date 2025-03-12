@@ -6,7 +6,7 @@ export const queryVectorTool = createVectorQueryTool({
   vectorStoreName: "pg",
   indexName: "workshop",
   model: openai.embedding("text-embedding-3-small"),
-  //   enableFilter: true,
+  // enableFilter: true,
   //   reranker: {
   //     model: openai("gpt-4o"),
   //     options: {

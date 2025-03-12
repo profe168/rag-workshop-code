@@ -84,9 +84,14 @@ async function upsertExampleVectors() {
   // Get PgVector instance
   const pgVector = mastra.getVector("pg");
 
+  // Create index
+  await pgVector.createIndex({
+    indexName: "searchExamples",
+    dimension: 1536,
+  });
   // Upsert vectors
   await pgVector.upsert({
-    indexName: "search-examples",
+    indexName: "searchExamples",
     vectors: embeddings,
     metadata: chunks.map((chunk) => ({
       ...chunk.metadata,
@@ -94,7 +99,7 @@ async function upsertExampleVectors() {
     })),
   });
 
-  console.log(`Successfully upserted ${chunks.length} document chunks`);
+  console.log(`Successfully upserted ${chunks.length} embeddings`);
 }
 
 // Run the example

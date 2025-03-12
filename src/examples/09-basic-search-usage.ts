@@ -1,7 +1,8 @@
-import { basicAgent } from "../mastra/agents";
+import { mastra } from "../mastra";
 
 // Example: Agent choosing basicSearchTool for simple keyword searches
 async function basicSearchExample() {
+  const basicAgent = mastra.getAgent("basicAgent");
   // Example 1: Authentication implementation
   const authResponse = await basicAgent.generate(
     "How do we implement JWT authentication in our system?"

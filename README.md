@@ -70,24 +70,47 @@ Contains markdown documents used to test our RAG functionality:
     - Finding function definitions
     - Finding usage examples
 
+## Getting Started
+
+1. **Install dependencies**:
+```bash
+pnpm i
+```
+
+2. **Set up environment variables**:
+   - Copy the example environment file to create your own:
+```bash
+cp .env.example .env
+```
+   - Open the `.env` file and add your:
+     - OpenAI API key
+     - PostgreSQL connection string
+     - Cohere API key (if using Cohere models)
+
 ## Usage
 
 1. First, insert the sample documents:
 ```bash
-ts-node src/documents/upsert.ts
+pnpm tsx src/documents/upsert.ts
 ```
 
 2. Try the chunking examples to understand different strategies:
 ```bash
-ts-node src/examples/01-character-chunking.ts
-ts-node src/examples/02-recursive-code-chunking.ts
+pnpm tsx src/examples/01-character-chunking.ts
+pnpm tsx src/examples/02-recursive-code-chunking.ts
 # etc...
 ```
 
 3. Explore the agent examples to see RAG in action:
+
+Upsert the example data for the agent examples:
 ```bash
-ts-node src/examples/09-basic-search-usage.ts
-ts-node src/examples/10-query-vector-usage.ts
+pnpm tsx src/documents/upsert.ts
+```
+
+```bash
+pnpm tsx src/examples/09-basic-search-usage.ts
+pnpm tsx src/examples/10-query-vector-usage.ts
 ```
 
 ## Key Concepts
