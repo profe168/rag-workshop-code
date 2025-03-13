@@ -2,6 +2,7 @@ import { embed } from "ai";
 import { mastra } from "../mastra";
 import { openai } from "@ai-sdk/openai";
 import { rerank } from "@mastra/rag";
+import { cohere } from "@ai-sdk/cohere";
 
 async function rerankingExample() {
   const query = "How can I improve vector search results?";
@@ -24,7 +25,7 @@ async function rerankingExample() {
   console.log(results);
 
   // Rerank results
-  const rerankedResults = await rerank(results, query, openai("gpt-4o"), {
+  const rerankedResults = await rerank(results, query, cohere("rerank-v3.5"), {
     topK: 3,
   });
 

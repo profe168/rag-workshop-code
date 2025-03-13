@@ -17,3 +17,8 @@ const chunks = await textDoc.chunk({
 });
 
 console.log("Character Chunks:", chunks);
+
+console.log(
+  "Chunk Text:",
+  chunks.map((chunk) => chunk.text)
+);
