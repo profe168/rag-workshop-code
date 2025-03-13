@@ -27,4 +27,3 @@ const chunks = await jsonDoc.chunk({
 });
 
 console.log("JSON Chunks:", chunks);
-// Output will show semantically meaningful JSON chunks

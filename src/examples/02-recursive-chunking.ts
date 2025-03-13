@@ -24,4 +24,3 @@ const chunks = await codeDoc.chunk({
 });
 
 console.log("Code Chunks:", chunks);
-// Output will show function-aware chunks

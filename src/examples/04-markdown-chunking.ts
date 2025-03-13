@@ -33,4 +33,3 @@ const chunks = await markdownDoc.chunk({
 });
 
 console.log("Markdown Chunks:", chunks);
-// Output will show chunks split by headers with metadata

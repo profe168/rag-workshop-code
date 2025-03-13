@@ -17,4 +17,3 @@ const chunks = await textDoc.chunk({
 });
 
 console.log("Character Chunks:", chunks);
-// Output will show overlapping text chunks
