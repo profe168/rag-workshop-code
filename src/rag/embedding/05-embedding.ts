@@ -5,7 +5,7 @@ import { cohere } from "@ai-sdk/cohere";
 async function embeddingExample() {
   const text = "The quick brown fox jumps over the lazy dog";
 
-  // Example 1: Basic embedding with text-embedding-3-small
+  // 例1: text-embedding-3-smallによる基本的なエンベディング
   console.log("\n1. OpenAI text-embedding-3-small (Fastest, 1536 dimensions):");
   const { embedding: smallEmbedding } = await embed({
     model: openai.embedding("text-embedding-3-small"),
@@ -14,7 +14,7 @@ async function embeddingExample() {
   console.log("Dimensions:", smallEmbedding.length);
   console.log("First 5 values:", smallEmbedding.slice(0, 5));
 
-  // Example 2: Higher quality embedding with text-embedding-3-large
+  // 例2: text-embedding-3-largeによる高品質エンベディング
   console.log(
     "\n2. OpenAI text-embedding-3-large (Best quality, 3072 dimensions):"
   );
@@ -25,7 +25,7 @@ async function embeddingExample() {
   console.log("Dimensions:", largeEmbedding.length);
   console.log("First 5 values:", largeEmbedding.slice(0, 5));
 
-  // Example 3: Cohere embedding model
+  //  例3: Cohereエンベディングモデル
   console.log("\n3. Cohere embed-english-v3.0 (Multilingual support):");
   const { embedding: cohereEmbedding } = await embed({
     model: cohere.embedding("embed-english-v3.0"),
@@ -34,7 +34,7 @@ async function embeddingExample() {
   console.log("Dimensions:", cohereEmbedding.length);
   console.log("First 5 values:", cohereEmbedding.slice(0, 5));
 
-  // Example 4: Batch embedding multiple texts
+  // 例4: 複数テキストのバッチエンベディング
   console.log("\n4. Batch embedding multiple texts:");
   const texts = [
     "The quick brown fox",

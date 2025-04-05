@@ -1,9 +1,9 @@
 import { embed } from "ai";
-import { mastra } from "../mastra";
+import { mastra } from "../../mastra";
 import { openai } from "@ai-sdk/openai";
 
 async function searchExample() {
-  // Example 1: Basic search
+  // 例1: 基本的な検索
   const { embedding: basicEmbedding } = await embed({
     model: openai.embedding("text-embedding-3-small"),
     value: "What are the main features of vector databases?",
@@ -20,7 +20,7 @@ async function searchExample() {
   console.log("\nBasic Search Results:");
   console.log(basicResults);
 
-  // Example 2: Search with metadata filter
+  // 例2: メタデータフィルタを使用した検索
   const { embedding: filteredEmbedding } = await embed({
     model: openai.embedding("text-embedding-3-small"),
     value: "How to implement vector search?",

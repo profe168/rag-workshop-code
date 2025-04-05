@@ -1,23 +1,23 @@
-import { mastra } from "../mastra";
+import { mastra } from "../../mastra";
 
-// Example: Agent choosing queryVectorTool for semantic searches
+// 例：意味検索にqueryVectorToolを選択するエージェント
 async function queryVectorExample() {
   const queryVectorAgent = mastra.getAgent("queryVectorAgent");
-  // Example 1: Semantic search for error handling
+  // 例1：エラー処理の意味検索
   const errorResponse = await queryVectorAgent.generate(
     "Find implementations in our codebase that show how we handle database errors and validation errors"
   );
 
   console.log("\nError Handling Search:", errorResponse.text);
 
-  // Example 2: Search with format and section filters
+  // 例2：フォーマットとセクションフィルタを使用した検索
   const configResponse = await queryVectorAgent.generate(
     "How do we handle errors in our application? Filter where section is error-handling AND format is markdown. Return the top 3 results."
   );
 
   console.log("\nFiltered Error Handling Search:", configResponse.text);
 
-  // Example 3: Search with reranking for authentication
+  // 例3：認証のための再ランキングを使用した検索
   const authResponse = await queryVectorAgent.generate(
     "Find the most relevant code examples showing JWT token verification and session validation."
   );

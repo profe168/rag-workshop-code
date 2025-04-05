@@ -1,5 +1,6 @@
 import { MDocument } from "@mastra/rag";
 
+// JSONドキュメントのチャンキング例
 const jsonContent = `{
   "config": {
     "api": {

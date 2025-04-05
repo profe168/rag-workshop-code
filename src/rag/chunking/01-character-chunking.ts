@@ -1,6 +1,6 @@
 import { MDocument } from "@mastra/rag";
 
-// Example: Simple character chunking
+// 例：単純な文字ベースのチャンキング
 const textDoc = new MDocument({
   docs: [
     {

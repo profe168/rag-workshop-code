@@ -1,5 +1,5 @@
 import { embed } from "ai";
-import { mastra } from "../mastra";
+import { mastra } from "../../mastra";
 import { openai } from "@ai-sdk/openai";
 import { rerank } from "@mastra/rag";
 import { cohere } from "@ai-sdk/cohere";
@@ -14,7 +14,7 @@ async function rerankingExample() {
 
   const pgVector = mastra.getVector("pg");
 
-  // Get initial results
+  // 初期検索結果を取得
   const results = await pgVector.query({
     indexName: "searchExamples",
     queryVector: embedding,
@@ -24,8 +24,8 @@ async function rerankingExample() {
   console.log("\nInitial Search Results:");
   console.log(results);
 
-  // Rerank results
-  const rerankedResults = await rerank(results, query, cohere("rerank-v3.5"), {
+  // 結果を再ランキング
+  const rerankedResults = await rerank(results, query, openai("gpt-4o"), {
     topK: 3,
   });
 

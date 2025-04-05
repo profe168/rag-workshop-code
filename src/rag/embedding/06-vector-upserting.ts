@@ -1,9 +1,9 @@
 import { MDocument } from "@mastra/rag";
 import { embedMany } from "ai";
 import { openai } from "@ai-sdk/openai";
-import { mastra } from "../mastra";
+import { mastra } from "../../mastra";
 
-// Example documents to insert
+// 挿入するドキュメントの例
 const documents = [
   {
     text: `# Vector Database Guide
@@ -57,13 +57,13 @@ For better results, consider:
 ];
 
 async function upsertExampleVectors() {
-  // Create MDocument instance
+  // MDocumentインスタンスを作成
   const doc = new MDocument({
     docs: documents,
     type: "markdown",
   });
 
-  // Chunk the documents
+  // ドキュメントをチャンク化
   await doc.chunk({
     strategy: "markdown",
     headers: [
@@ -72,26 +72,26 @@ async function upsertExampleVectors() {
     ],
   });
 
-  // Get chunked documents
+  // チャンク化されたドキュメントを取得
   const chunks = doc.getDocs();
 
-  // Generate embeddings
+  // エンベディングを生成
   const { embeddings } = await embedMany({
     model: openai.embedding("text-embedding-3-small"),
     values: chunks.map((chunk) => chunk.text),
   });
 
-  // Get PgVector instance
+  // PgVectorインスタンスを取得
   const pgVector = mastra.getVector("pg");
 
-  // Delete existing index (if exists)
+  // 既存のインデックスを削除（存在する場合）
   await pgVector.deleteIndex("searchExamples");
-  // Create index
+  // インデックスを作成
   await pgVector.createIndex({
     indexName: "searchExamples",
     dimension: 1536,
   });
-  // Upsert vectors
+  // ベクトルをアップサート
   await pgVector.upsert({
     indexName: "searchExamples",
     vectors: embeddings,
@@ -104,7 +104,7 @@ async function upsertExampleVectors() {
   console.log(`Successfully upserted ${chunks.length} embeddings`);
 }
 
-// Run the example
+// 例を実行
 upsertExampleVectors().catch(console.error);
 
 /*

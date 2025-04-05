@@ -1,5 +1,6 @@
 import { MDocument } from "@mastra/rag";
 
+// マークダウンドキュメントのチャンキング例
 const markdownContent = `
 # User Guide
 ## Installation

@@ -1,21 +1,21 @@
-import { mastra } from "../mastra";
+import { mastra } from "../../mastra";
 
-// Example: Agent choosing basicSearchTool for simple keyword searches
+// 例：シンプルなキーワード検索にbasicSearchToolを選択するエージェント
 async function basicSearchExample() {
   const basicAgent = mastra.getAgent("basicAgent");
-  // Example 1: Authentication implementation
+  // 例1：認証の実装
   const authResponse = await basicAgent.generate(
     "How do we implement JWT authentication in our system?"
   );
   console.log("\nJWT Authentication Search:", authResponse.text);
 
-  // Example 2: Error handling patterns
+  // 例2：エラー処理パターン
   const errorResponse = await basicAgent.generate(
     "What are our standard error handling patterns for API responses?"
   );
   console.log("\nError Handling Search:", errorResponse.text);
 
-  // Example 3: Configuration structure
+  // 例3：設定構造
   const configResponse = await basicAgent.generate(
     "What monitoring configurations are available in our system?"
   );

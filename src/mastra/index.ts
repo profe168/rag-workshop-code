@@ -1,8 +1,11 @@
-import { Mastra } from '@mastra/core/mastra';
-
+import { Mastra } from "@mastra/core/mastra";
 import { queryVectorAgent, basicAgent } from "./agents";
 import { PgVector } from "@mastra/pg";
 import { codeAgent } from "../bonus/agent";
+import dotenv from "dotenv";
+
+// .envファイルの読み込み
+dotenv.config();
 
 const connectionString = process.env.POSTGRES_CONNECTION_STRING;
 if (!connectionString) {
