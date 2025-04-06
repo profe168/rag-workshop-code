@@ -62,9 +62,9 @@ async function upsertDocuments() {
       ["#", "Header 1"],
       ["##", "Header 2"],
     ],
-    maxSize: 1500, // Large enough for complete code examples
-    minSize: 500, // Small enough to be specific but meaningful
-    overlap: 100, // Enough to maintain context between chunks
+    maxSize: 1500, // コード例全体を含むのに十分な大きさ
+    minSize: 500, // 具体的かつ意味のある内容を保つのに十分小さい
+    overlap: 100, // チャンク間のコンテキストを維持するのに十分な重複
   });
 
   // JSON設定を処理
@@ -87,9 +87,9 @@ async function upsertDocuments() {
 
   await configDoc.chunk({
     strategy: "json",
-    maxSize: 1000, // Smaller for JSON as each chunk should be a logical unit
-    minSize: 200, // Allow smaller chunks for individual config sections
-    overlap: 50, // Less overlap needed for structured data
+    maxSize: 1000, // JSONは論理単位ごとに小さくチャンク化
+    minSize: 200, // 個別の設定セクションに対応できるよう小さめに設定
+    overlap: 50, // 構造化データでは重複が少なくて済む
   });
 
   // 両方のドキュメントタイプからチャンクを結合

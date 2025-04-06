@@ -8,7 +8,8 @@
     "simple-rag": "tsx src/rag/generate/09-basic-search-usage.ts",
     "rag": "tsx src/rag/generate/10-query-vector-usage.ts",
     "simple-eval": "tsx src/eval/simple-eval.ts",
-    "eval": "tsx src/eval/eval.ts"
+    "eval": "tsx src/eval/eval-context-relevancy.ts",
+    "eval-japanese": "tsx src/eval/eval-context-relevancy-with-metric.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "@ai-sdk/cohere": "^1.1.13",
     "@ai-sdk/openai": "^1.2.2",
     "@mastra/core": "^0.6.0",
+    "@mastra/evals": "^0.1.14",
     "@mastra/pg": "^0.2.0",
     "@mastra/rag": "0.1.9",
     "ai": "latest",
