@@ -27,17 +27,17 @@ async function queryVectorExample() {
 
 queryVectorExample().catch(console.error);
 
-/* Example output:
+/* 出力例：
 
-Error Handling Search: I found several implementations for handling database and validation errors. 
-The DatabaseError class extends AppError and captures the original error with context. It's used 
-throughout our codebase to standardize database error handling...
+Error Handling Search: データベースエラーとバリデーションエラーの処理実装をいくつか見つけました。
+DatabaseErrorクラスはAppErrorを拡張し、コンテキスト付きで元のエラーをキャプチャします。
+これはコードベース全体でデータベースエラー処理を標準化するために使用されています...
 
-Filtered Error Handling Search: According to our error-handling documentation, we use a centralized 
-approach with the errorHandlerMiddleware. This middleware categorizes errors by type, logs them 
-appropriately, and returns standardized error responses...
+Filtered Error Handling Search: エラー処理ドキュメントによると、errorHandlerMiddlewareを使用した
+集中型アプローチを採用しています。このミドルウェアはエラーをタイプ別に分類し、
+適切にログを記録し、標準化されたエラーレスポンスを返します...
 
-Authentication Search: The JWT token verification and session validation are implemented in the 
-AuthenticationService class. The verifyToken method uses jwt.verify to decode and validate tokens, 
-while validateSession checks if the session exists and hasn't expired...
+Authentication Search: JWTトークン検証とセッション検証はAuthenticationServiceクラスで実装されています。
+verifyTokenメソッドはjwt.verifyを使用してトークンをデコードおよび検証し、
+validateSessionはセッションが存在し、期限切れになっていないかどうかを確認します...
 */

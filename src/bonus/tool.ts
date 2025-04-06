@@ -27,7 +27,7 @@ export const findCodeTool = createTool({
       throw new Error("Vector store not found");
     }
 
-    // Enhance query based on type
+    // タイプに基づいてクエリを強化
     const enhancedQuery =
       type === "function"
         ? `function ${query}`
@@ -40,18 +40,18 @@ export const findCodeTool = createTool({
       value: enhancedQuery,
     });
 
-    // Build the filter
+    // フィルターを構築
     const filter: Record<string, any> = {
       type: "code",
       format: "typescript",
     };
 
-    // Add section filter if provided
+    // セクションが指定されている場合、フィルターに追加
     if (section) {
       filter.section = section;
     }
 
-    // Add chunk type filter based on the type of code we're looking for
+    // 検索するコードのタイプに基づいてチャンクタイプフィルターを追加
     if (type === "function") {
       filter.chunkType = "function_definition";
     } else if (type === "method") {

@@ -53,20 +53,20 @@ async function embeddingExample() {
 
 embeddingExample().catch(console.error);
 
-/* Example output:
-1. OpenAI text-embedding-3-small (Fastest, 1536 dimensions):
-Dimensions: 1536
-First 5 values: [0.123, -0.456, 0.789, -0.012, 0.345]
+/* 出力例：
+1. OpenAI text-embedding-3-small（最速、1536次元）：
+次元数: 1536
+最初の5つの値: [0.123, -0.456, 0.789, -0.012, 0.345]
 
-2. OpenAI text-embedding-3-large (Best quality, 3072 dimensions):
-Dimensions: 3072
-First 5 values: [0.234, -0.567, 0.890, -0.123, 0.456]
+2. OpenAI text-embedding-3-large（最高品質、3072次元）：
+次元数: 3072
+最初の5つの値: [0.234, -0.567, 0.890, -0.123, 0.456]
 
-3. Cohere embed-english-v3.0 (Multilingual support):
-Dimensions: 1024
-First 5 values: [0.345, -0.678, 0.901, -0.234, 0.567]
+3. Cohere embed-english-v3.0（多言語サポート）：
+次元数: 1024
+最初の5つの値: [0.345, -0.678, 0.901, -0.234, 0.567]
 
-4. Batch embedding multiple texts:
-Number of embeddings: 3
-Each embedding dimensions: 1536
+4. 複数テキストのバッチエンベディング：
+エンベディング数: 3
+各エンベディングの次元数: 1536
 */

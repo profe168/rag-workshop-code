@@ -105,6 +105,7 @@ async function evaluateContextRelevancy() {
     score: number;
     reason: string;
     docsCount: number;
+    answer: string;
   }> = [];
 
   // PgVectorインスタンスの取得
@@ -136,17 +137,40 @@ async function evaluateContextRelevancy() {
 
     console.log(`取得された文書数: ${retrievedDocs.length}`);
 
+    // 実際のLLMによる回答生成
+    const contextText = retrievedDocs.join("\n\n");
+    const answerPrompt = `
+次の質問に関連するコンテキスト情報が与えられています。
+コンテキスト情報に基づいて質問に回答してください。
+もし回答に必要な情報がコンテキストにない場合は、「この質問に回答するための十分な情報がありません」と述べてください。
+
+【コンテキスト情報】
+${contextText}
+
+【質問】
+${query}
+
+【回答】
+`;
+
+    // LLMによる回答生成
+    const answerCompletion = await generateText({
+      model: openai("gpt-4o"),
+      prompt: answerPrompt,
+      temperature: 0.3,
+      maxTokens: 500,
+    });
+
+    const generatedAnswer = answerCompletion.text.trim();
+    console.log(`生成された回答:\n${generatedAnswer}`);
+
     // コンテキスト関連性メトリックの初期化
     const metric = await ContextRelevancyMetric(model, {
       context: retrievedDocs,
     });
 
-    // 模擬回答（実際のシステムでは生成AIによる回答）
-    const mockAnswer =
-      "ご質問についての情報です。詳細は文書を参照してください。";
-
-    // 評価の実行
-    const evalResult = await metric.measure(query, mockAnswer);
+    // 評価の実行（生成された回答を使用）
+    const evalResult = await metric.measure(query, generatedAnswer);
 
     // 結果の表示と保存
     console.log(`関連性スコア: ${evalResult.score.toFixed(2)}`);
@@ -157,6 +181,7 @@ async function evaluateContextRelevancy() {
       score: evalResult.score,
       reason: evalResult.info.reason,
       docsCount: retrievedDocs.length,
+      answer: generatedAnswer
     });
   }
 
@@ -171,6 +196,7 @@ async function evaluateContextRelevancy() {
   evaluationResults.forEach((r, i) => {
     console.log(`\nクエリ ${i + 1}: "${r.query}"`);
     console.log(`スコア: ${r.score.toFixed(2)}`);
+    console.log(`回答: ${r.answer.slice(0, 100)}...`);
   });
 }
 

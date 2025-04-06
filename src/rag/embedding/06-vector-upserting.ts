@@ -108,11 +108,11 @@ async function upsertExampleVectors() {
 upsertExampleVectors().catch(console.error);
 
 /*
-Example output:
-Successfully upserted 2 vectors
+出力例：
+2つのベクトルが正常にアップサートされました
 
-The vectors are now stored in PgVector and can be queried using:
-- Basic search
-- Metadata filtering
-- Similarity search
+ベクトルはPgVectorに保存され、以下の方法でクエリできます：
+- 基本検索
+- メタデータフィルタリング
+- 類似性検索
 */
